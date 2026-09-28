@@ -1,0 +1,7 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "definition_names": ["Revelation.Mechanism", "Revelation.IsDSIC"],
+  "theorem_names": ["Revelation.revelation_principle"],
+  "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"]
+}

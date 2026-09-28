@@ -1,0 +1,127 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "revelation-principle-lean"
+  description: >-
+    A Lean formalization of the dominant-strategy revelation principle with
+    private-value utilities u i : X -> Θ i -> ℝ. If a mechanism implements
+    f through dominant strategies σ, then the direct mechanism
+    fun θ => mech (fun i => σ i (θ i)) is dominant-strategy incentive
+    compatible and reproduces f on truthful reports.
+  authors:
+    - "Arthur Freitas Ramos"
+  responsible_maintainers:
+    - "Arthur Freitas Ramos"
+  license: "BSD-3-Clause"
+
+sources:
+  - title: "Optimal Auction Design"
+    authors:
+      - "Roger B. Myerson"
+    type: "article"
+    location: "Mathematics of Operations Research 6(1), 1981."
+    relationship: "formalizes"
+    author_endorsement: "not-contacted"
+    note: >-
+      The formalization concerns the dominant-strategy revelation argument
+      for deterministic mechanisms with private-value utilities.
+
+related_formalizations: []
+
+classification:
+  arxiv:
+    - "cs.GT"
+    - "econ.TH"
+
+status:
+  scope: >-
+    Agents have decidable equality; each agent i has a type space Θ i and
+    message space M i. Outcomes have type X and private-value utilities are
+    u i : X -> Θ i -> ℝ. Revelation.revelation_principle takes
+    himpl : ∀ θ, mech (fun i => σ i (θ i)) = f θ and
+    hdom : ∀ i, IsDominantStrategy mech u σ i. It concludes
+    IsDSIC (directMechanism mech σ) u ∧
+    ∀ θ, directMechanism mech σ θ = f θ. The direct mechanism is
+    fun θ => mech (fun i => σ i (θ i)). The author knows of no earlier
+    Palomar registry entry for this revelation-principle statement.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms:
+    - "propext"
+    - "Classical.choice"
+    - "Quot.sound"
+  main_results:
+    - declaration: "Revelation.revelation_principle"
+      file: "Solution.lean"
+      description: >-
+        Dominant-strategy implementation of f by mech and σ implies
+        IsDSIC (directMechanism mech σ) u and equality to f on every
+        truthful type profile.
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+
+automation:
+  methods:
+    - method: "agent"
+      models:
+        - "GPT-6 via Codex"
+      framework: "Lean 4 v4.35.0-rc2 and Mathlib v4.35.0-rc2"
+      tool_setup: >-
+        The Lean toolchain and Mathlib revision are pinned in lean-toolchain
+        and lakefile.toml.
+      cost:
+        wall_time: "not tracked"
+        spend_usd: "subscription-based"
+        hardware: "local machine"
+      prompting_notes: >-
+        Lean checks the implementation. Challenge.lean separately states
+        comparator declarations with three intentional placeholders.
+  spend_usd: "subscription-based"
+  notes: >-
+    AI assistance was used for the formalization and packaging. No Palomar
+    submission or registration was performed as part of this work.
+
+fidelity:
+  divergences: >-
+    This theorem addresses dominant strategies and private-value, real-valued
+    utility. It does not formalize Bayesian incentives, randomization, or
+    interdependent values.
+
+alignment:
+  namespace: "Revelation"
+  statements:
+    - source: "Mechanism and dominant strategy"
+      lean: "Revelation.Mechanism; Revelation.IsDominantStrategy"
+      module: "Revelation/Basic.lean"
+      status: "defined"
+      note: >-
+        Mechanism maps message profiles to outcomes. For true type t,
+        IsDominantStrategy compares σ i t with every message deviation m'
+        while holding the messages of every other agent fixed.
+    - source: "Direct mechanism and truthful dominant strategies"
+      lean: "Revelation.directMechanism; Revelation.IsDSIC"
+      module: "Revelation/Basic.lean"
+      status: "defined"
+      note: >-
+        directMechanism mech σ evaluates mech on the messages induced by
+        reported types. IsDSIC asserts that truthful reporting is dominant.
+    - source: "Dominant-strategy revelation principle"
+      lean: "Revelation.revelation_principle"
+      module: "Revelation/RevelationPrinciple.lean"
+      status: "proved"
+      note: >-
+        Under himpl and hdom, the direct mechanism is DSIC and agrees with f
+        at every type profile.
+
+review:
+  status: "self-assessed"
+  reviewers:
+    - "none"
+  notes: >-
+    The local verifier checks compilation, comparator declarations, axioms,
+    and the standalone Challenge. No external review is claimed.
+
+acknowledgements: >-
+  Mathlib contributors and Roger B. Myerson for the foundational result.
