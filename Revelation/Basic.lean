@@ -27,6 +27,6 @@ def directMechanism {Θ M : ι → Type*} {X : Type*}
 /-- DSIC: truth-telling is a dominant strategy in a direct mechanism. -/
 def IsDSIC {Θ : ι → Type*} {X : Type*}
     (dir : Mechanism ι Θ X) (u : ∀ i, X → Θ i → ℝ) : Prop :=
-  ∀ i, IsDominantStrategy dir u (fun i t => t) i
+  ∀ i, IsDominantStrategy dir u (fun _ t => t) i
 
 end Revelation

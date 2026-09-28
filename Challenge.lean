@@ -4,8 +4,7 @@ import Mathlib.Basic.Real.Basic
 # Revelation principle statements
 
 This module stands alone for the Palomar comparator. The incentive-compatibility
-predicate and theorem have placeholder bodies. A separate placeholder keeps
-the Challenge's expected placeholder count at three.
+predicate and theorem have placeholder bodies (two placeholders total).
 -/
 
 namespace Revelation
@@ -37,9 +36,6 @@ def directMechanism {ι : Type*} {Θ M : ι → Type*} {X : Type*}
 /-- Truth-telling is dominant in the direct mechanism. -/
 def IsDSIC {ι : Type*} [DecidableEq ι] {Θ : ι → Type*} {X : Type*}
     (dir : Mechanism ι Θ X) (u : ∀ i, X → Θ i → ℝ) : Prop := sorry
-
-/-- An isolated placeholder used by the standalone comparator challenge. -/
-def challengePlaceholder : Nat := sorry
 
 /-- Dominant-strategy implementation yields a truthful direct mechanism
 with the same outcome function. -/

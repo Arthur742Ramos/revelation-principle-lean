@@ -127,8 +127,8 @@ if set(config.get("permitted_axioms", [])) != {
 
 challenge = pathlib.Path("Challenge.lean").read_text(encoding="utf-8")
 challenge_sorry_count = len(re.findall(r"\bsorry\b", challenge))
-if challenge_sorry_count != 3:
-    raise SystemExit(f"error: Challenge.lean must contain exactly 3 sorry tokens, found {challenge_sorry_count}")
+if challenge_sorry_count != 2:
+    raise SystemExit(f"error: Challenge.lean must contain exactly 2 sorry tokens, found {challenge_sorry_count}")
 if re.search(r"\b(admit|axiom|unsafe)\b", challenge):
     raise SystemExit("error: Challenge.lean contains admit, axiom, or unsafe")
 

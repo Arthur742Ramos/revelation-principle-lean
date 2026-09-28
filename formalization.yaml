@@ -77,7 +77,7 @@ automation:
         hardware: "local machine"
       prompting_notes: >-
         Lean checks the implementation. Challenge.lean separately states
-        comparator declarations with three intentional placeholders.
+        comparator declarations with two intentional placeholders.
   spend_usd: "subscription-based"
   notes: >-
     AI assistance was used for the formalization and packaging. No Palomar
