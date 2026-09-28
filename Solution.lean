@@ -1,1 +1,3 @@
-import Revelation
+module
+
+public import Revelation

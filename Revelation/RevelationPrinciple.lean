@@ -1,4 +1,7 @@
-import Revelation.Basic
+module
+
+public import Revelation.Basic
+import all Revelation.Basic
 
 namespace Revelation
 
@@ -6,7 +9,7 @@ variable {ι : Type*} [DecidableEq ι]
 
 /-- A dominant-strategy implementation yields a truthful direct mechanism
 with the same outcome function. -/
-theorem revelation_principle {Θ M : ι → Type*} {X : Type*}
+public theorem revelation_principle {Θ M : ι → Type*} {X : Type*}
     (mech : Mechanism ι M X) (u : ∀ i, X → Θ i → ℝ)
     (σ : ∀ i, Θ i → M i) (f : (∀ i, Θ i) → X)
     (himpl : ∀ θ, mech (fun i => σ i (θ i)) = f θ)

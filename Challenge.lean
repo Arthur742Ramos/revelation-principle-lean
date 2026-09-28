@@ -1,4 +1,6 @@
-import Mathlib.Basic.Real.Basic
+module
+
+public import Mathlib.Basic.Real.Basic
 
 /-!
 # Revelation principle statements
@@ -13,13 +15,13 @@ section
 variable {ι : Type*} [DecidableEq ι]
 
 /-- A mechanism maps message profiles to outcomes. -/
-def Mechanism (ι : Type*) (M : ι → Type*) (X : Type*) : Type _ :=
+@[expose] public def Mechanism (ι : Type*) (M : ι → Type*) (X : Type*) : Type _ :=
   (∀ i, M i) → X
 
 end
 
 /-- Playing `σ i t` is optimal against every profile of other messages. -/
-def IsDominantStrategy {ι : Type*} [DecidableEq ι]
+public def IsDominantStrategy {ι : Type*} [DecidableEq ι]
     {Θ M : ι → Type*} {X : Type*}
     (mech : Mechanism ι M X) (u : ∀ i, X → Θ i → ℝ)
     (σ : ∀ i, Θ i → M i) (i : ι) : Prop :=
@@ -28,18 +30,18 @@ def IsDominantStrategy {ι : Type*} [DecidableEq ι]
     u i (mech (Function.update m i m')) t
 
 /-- The direct mechanism applies the original strategies to reported types. -/
-def directMechanism {ι : Type*} {Θ M : ι → Type*} {X : Type*}
+public def directMechanism {ι : Type*} {Θ M : ι → Type*} {X : Type*}
     (mech : Mechanism ι M X) (σ : ∀ i, Θ i → M i) :
     Mechanism ι Θ X :=
   fun θ => mech (fun i => σ i (θ i))
 
 /-- Truth-telling is dominant in the direct mechanism. -/
-def IsDSIC {ι : Type*} [DecidableEq ι] {Θ : ι → Type*} {X : Type*}
+public def IsDSIC {ι : Type*} [DecidableEq ι] {Θ : ι → Type*} {X : Type*}
     (dir : Mechanism ι Θ X) (u : ∀ i, X → Θ i → ℝ) : Prop := sorry
 
 /-- Dominant-strategy implementation yields a truthful direct mechanism
 with the same outcome function. -/
-theorem revelation_principle {ι : Type*} [DecidableEq ι]
+public theorem revelation_principle {ι : Type*} [DecidableEq ι]
     {Θ M : ι → Type*} {X : Type*}
     (mech : Mechanism ι M X) (u : ∀ i, X → Θ i → ℝ)
     (σ : ∀ i, Θ i → M i) (f : (∀ i, Θ i) → X)

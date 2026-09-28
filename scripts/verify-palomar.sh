@@ -105,6 +105,16 @@ import pathlib
 import re
 
 config = json.loads(pathlib.Path("comparator.json").read_text(encoding="utf-8"))
+module_files = [
+    "Challenge.lean",
+    "Solution.lean",
+    "Revelation.lean",
+    "Revelation/Basic.lean",
+    "Revelation/RevelationPrinciple.lean",
+]
+for name in module_files:
+    if pathlib.Path(name).read_text(encoding="utf-8").splitlines()[0] != "module":
+        raise SystemExit(f"error: {name} must begin with the module header")
 expected_definitions = [
     "Revelation.Mechanism",
     "Revelation.IsDSIC",
@@ -137,13 +147,11 @@ solution_forbidden = re.findall(r"\b(sorry|admit|axiom|unsafe)\b", solution)
 if solution_forbidden:
     raise SystemExit(f"error: forbidden token(s) {sorted(set(solution_forbidden))} found in Solution.lean")
 
-library_files = sorted(pathlib.Path("Revelation").glob("*.lean"))
-library_sorry_count = sum(
-    len(re.findall(r"\bsorry\b", path.read_text(encoding="utf-8")))
-    for path in library_files
-)
-print(f"Informational: Revelation/*.lean contains {library_sorry_count} sorry tokens.")
-print("Challenge placeholder count passed (3); Solution.lean contains no forbidden tokens.")
+for path in sorted(pathlib.Path("Revelation").rglob("*.lean")):
+    forbidden = re.findall(r"\b(sorry|admit|axiom|unsafe)\b", path.read_text(encoding="utf-8"))
+    if forbidden:
+        raise SystemExit(f"error: forbidden token(s) {sorted(set(forbidden))} found in {path}")
+print("Module headers, two Challenge placeholders, and proof-source token checks passed.")
 PY
 
 lake build

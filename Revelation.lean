@@ -1,2 +1,4 @@
-import Revelation.Basic
-import Revelation.RevelationPrinciple
+module
+
+public import Revelation.Basic
+public import Revelation.RevelationPrinciple
